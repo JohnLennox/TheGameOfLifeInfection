@@ -118,7 +118,15 @@ class Board {
     }
 
     getNumberOfPeople(){
-
+        let numberOfPeople = 0;
+        for (let i =0; i < this.board.length; i++){
+            for(let j=0 ; j< this.board.length; j++){
+                if(this.board[i][j] != undefined){
+                    numberOfPeople ++;
+                }
+            }
+        }
+        return numberOfPeople;
     }
 
     getNumberOfInfected(){
