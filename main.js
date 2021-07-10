@@ -7,7 +7,6 @@ function setup() {
     let canvas = createCanvas(700, 700);
     canvas.parent('canvasContainer');
     canvas.id('mycanvas');
-    // frameRate(10);
 
     let gridLength = 100
     
@@ -52,6 +51,5 @@ function gameLogic() {
 }
 
 function statProcessing() {
-    // statEngine.increaseTurn();
-    // statEngine
+
 }

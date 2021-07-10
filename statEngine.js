@@ -30,8 +30,8 @@ class StatEngine{
         return this.statistics.get(generation).totalDeaths - this.infectedDeaths;
     }
 
-    gatherStatistics(){
-        board.
+    processStatistics(statistics){
+
     }
     
     processInfectedDeath(){
