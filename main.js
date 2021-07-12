@@ -2,15 +2,18 @@ let board;
 let people = [];
 let ageLimit = 50;
 let statEngine;
+let count;
 
 function setup() {
+    count =0;
     let canvas = createCanvas(700, 700);
     canvas.parent('canvasContainer');
     canvas.id('mycanvas');
 
-    let gridLength = 100
+    let gridLength = 100;
     
     board = new Board(gridLength);
+    statEngine = new StatEngine(board);
 }
 
 function draw() {
@@ -25,6 +28,8 @@ function draw() {
     }
     gameLogic();
     statProcessing();
+    displayData();
+    count ++;
 }
 
 function gameLogic() {
@@ -32,7 +37,6 @@ function gameLogic() {
         for (let j = 0; j < board.length; j++) {
             if (board.getPosition(i, j) != undefined) {
                 let person = board.getPosition(i, j);
-
                 // TODO : extract below into the person.processTurn method
                 if (person.getNeighbours() < 1 || person.getNeighbours() > 3 || person.getAge() > ageLimit) {
                     person.die();
@@ -50,6 +54,13 @@ function gameLogic() {
     }
 }
 
-function statProcessing() {
+function displayData(){
+    document.getElementById('alive').innerText = "People alive: " + statEngine.getPopulation(count);
+    document.getElementById('infectedPop').innerText = "Population Infected: " + statEngine.getInfected(count);
+    document.getElementById('alive').innerText = "People alive: " + statEngine.getPopulation(count);
+    document.getElementById('alive').innerText = "People alive: " + statEngine.getPopulation(count);
+}
 
+function statProcessing() {
+    statEngine.processStats(board.getStats());
 }
