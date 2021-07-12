@@ -1,21 +1,14 @@
 class StatEngine{
-    constructor(givenBoard) {
-        let board = givenBoard;
-        let statistics = new Array(); 
-        let data = new DataObject();
-    }
-
-    newGeneration(){
-        this.data = new DataObject();
-        this.statistics.push(data);
+    constructor() {
+        this.statistics = new Array(); 
     }
 
     getInfected(generation){
-        return this.statistics.get(generation).populationInfected;
+        return this.statistics[generation].populationInfected;
     }
 
     getPopulation(generation){
-        return  this.statistics.get(generation).population;
+        return  this.statistics[generation].population;
     }
 
     getDead(generation){
@@ -30,17 +23,7 @@ class StatEngine{
         return this.statistics.get(generation).totalDeaths - this.infectedDeaths;
     }
 
-    processStatistics(statistics){
-
+    processStats(data){
+        this.statistics.push(data);
     }
-    
-    processInfectedDeath(){
-        this.data.infectedDeaths++;
-        this.data.totalDeaths++;
-    }
-
-    processNaturalDeath(){
-        this.data.totalDeaths++;
-    }
-    
 }

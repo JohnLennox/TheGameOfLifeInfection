@@ -2,6 +2,9 @@ class Board {
     constructor(gridLength) {
         this.board = this.make2dArray(gridLength);
         this.length = gridLength;
+        this.roundDeaths = 0;
+        this.infectedDeaths = 0;
+
         for (let i = 0; i < gridLength; i++) {
             for (let j = 0; j < gridLength; j++) {
                 let create = floor(random(5));
@@ -29,31 +32,33 @@ class Board {
         this.board[x][y] = person;
     }
 
-    getPersonsInfectedNeighbours(person){
+    getPersonsInfectedNeighbours(person) {
         let infectedCount = 0;
         let y = person.getY();
         let x = person.getX();
 
-        if (!this.infected) {
-            for (let i = x - 1; i <= x + 1; i++) {
-                if (i >= 0 && i < board.length) {
-                    for (let j = y - 1; j <= y + 1; j++) {
-                        if (j >= 0 && j < this.length) {
-                            if (this.board[i][j] != undefined) {
-                                let personB = this.board[i][j];
-                                if (personB.isInfected()) {
-                                    infectedCount++;
-                                }
+        if(person.isInfected()){
+            return infectedCount;
+        }
+
+        for (let i = x - 1; i <= x + 1; i++) {
+            if (i >= 0 && i < board.length) {
+                for (let j = y - 1; j <= y + 1; j++) {
+                    if (j >= 0 && j < this.length) {
+                        if (this.board[i][j] != undefined ) {
+                            if (this.board[i][j].isInfected()) {
+                                infectedCount++;
                             }
                         }
                     }
                 }
             }
         }
+
         return infectedCount;
     }
 
-    getPersonsNeighbours(person){
+    getPersonsNeighbours(person) {
         let x = person.getX();
         let y = person.getY();
         let count = -1;
@@ -96,41 +101,49 @@ class Board {
         return options;
     }
 
-    movePerson(person,dir){
+    movePerson(person, dir) {
         let curX = person.getX();
         let curY = person.getY();
         this.board[curX][curY] = undefined;
         if (dir == "RIGHT") {
-            person.setX(curX +1)
+            person.setX(curX + 1)
         }
         if (dir == "LEFT") {
-            person.setX(curX -1)
+            person.setX(curX - 1)
         }
         if (dir == "UP") {
-            person.setY(curY +1)
+            person.setY(curY + 1)
         }
 
         if (dir == "DOWN") {
-            person.setY(curY -1)
+            person.setY(curY - 1)
         }
 
         this.board[person.getX()][person.getY()] = person;
     }
 
-    getNumberOfPeople(){
+    getNumberOfPeople() {
         let numberOfPeople = 0;
-        for (let i =0; i < this.board.length; i++){
-            for(let j=0 ; j< this.board.length; j++){
-                if(this.board[i][j] != undefined){
-                    numberOfPeople ++;
+        for (let i = 0; i < this.board.length; i++) {
+            for (let j = 0; j < this.board.length; j++) {
+                if (this.board[i][j] != undefined) {
+                    numberOfPeople++;
                 }
             }
         }
         return numberOfPeople;
     }
 
-    getNumberOfInfected(){
-
+    getNumberOfInfected() {
+        let infected = 0;
+        for (let i = 0; i < this.board.length; i++) {
+            for (let j = 0; j < this.board.length; j++) {
+                if (this.board[i][j] != undefined && this.board[i][j].isInfected()) {
+                    infected++
+                }
+            }
+        }
+        return infected;
     }
 
     getPosition(i, j) {
@@ -138,19 +151,26 @@ class Board {
     }
 
     killPerson(i, j, infection) {
-        if(infection){
-            // statEngine.processInfectedDeath();
-        }else{
-            // statEngine.processNaturalDeath();
-        }
+        if (infection) {
+            this.infectedDeaths ++;
+        } 
+        this.roundDeaths ++;
+
         this.board[i][j] = undefined;
     }
 
-    getArray() {
-        return this.board;
+    resetStats(){
+        this.infectedDeaths = 0;
+        this.roundDeaths = 0;
     }
 
-    update(board) {
-        this.board = board;
+
+    getStats() {
+        let infectedDeaths = this.infectedDeaths;
+        let totalDeaths = this.roundDeaths;
+        let population = this.getNumberOfPeople();
+        let populationInfected = this.getNumberOfInfected();
+        this.resetStats();
+        return new DataObject(infectedDeaths, totalDeaths, population, populationInfected);
     }
 }
