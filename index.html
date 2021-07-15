@@ -4,9 +4,11 @@
     <meta charset="utf-8">
     <title>The Game of Life Infection</title>
     <script src="https://cdn.jsdelivr.net/npm/p5@1.1.9/lib/p5.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.4.1/chart.min.js"> </script>
     <script src="person.js"> </script>
     <script src="board.js"> </script>
     <script src="statEngine.js"> </script>
+    <script src="graphEngine.js"> </script>
     <script src="dataObject.js"> </script>
     <script src="main.js"> </script>
 </head>
@@ -15,9 +17,9 @@
     <p id="alive">People alive:</p>
     <p id="infectedDeaths">Infected Deaths:</p>
     <p id = "infectedPop">Population Infected:</p>
-
     <div id="canvasContainer">
     </div>
+    <canvas id="aliveChart" style="width:300; height: 300;" width="300" height="300"></canvas>
 </body>
 
 </html>

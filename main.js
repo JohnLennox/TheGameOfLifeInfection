@@ -3,6 +3,8 @@ let people = [];
 let ageLimit = 50;
 let statEngine;
 let count;
+let graphEngine;
+let graph;
 
 function setup() {
     count =0;
@@ -10,10 +12,12 @@ function setup() {
     canvas.parent('canvasContainer');
     canvas.id('mycanvas');
 
+    graphEngine = new GraphEngine();
     let gridLength = 100;
     
     board = new Board(gridLength);
     statEngine = new StatEngine(board);
+    graph = initGraph('aliveChart');
 }
 
 function draw() {
@@ -29,7 +33,10 @@ function draw() {
     gameLogic();
     statProcessing();
     displayData();
+    updateGraph(graph, statEngine.getPopulationSoFar());
+
     count ++;
+
 }
 
 function gameLogic() {
@@ -59,6 +66,16 @@ function displayData(){
     document.getElementById('infectedPop').innerText = "Population Infected: " + statEngine.getInfected(count);
     document.getElementById('alive').innerText = "People alive: " + statEngine.getPopulation(count);
     document.getElementById('alive').innerText = "People alive: " + statEngine.getPopulation(count);
+}
+
+function initGraph(id){
+    let ctx = document.getElementById(id);
+    let chart =  graphEngine.drawChart(ctx,statEngine.getPopulationSoFar());
+    return chart;
+}
+
+function updateGraph(graphs, data){
+    graphEngine.updateGraph(graphs, data);
 }
 
 function statProcessing() {
