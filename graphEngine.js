@@ -3,7 +3,6 @@ class GraphEngine {
     constructor(){
         this.numberedList = new Array();
     }
-    
 
     updateGraph(graph, dataList) {
         
@@ -48,7 +47,6 @@ class GraphEngine {
     }
 
     makeDataSets(dataObjects){
-        
         let datasets = new Array();
         for(let i =0; i<dataObjects.length; i++){
             let dataObject = dataObjects[i];
@@ -58,21 +56,12 @@ class GraphEngine {
         return datasets;
     }
 
-    test(dataList) {
-        return {
-            label: "people",
-            data: dataList,
-            colour: 'rgb(75,192,192)'
-        }
-    }
-
     drawChart(ctx, dataList) {
         return new Chart(ctx, {
             type: 'line',
             data: {
                 datasets: this.makeDataSets(dataList)
-            }
-            ,
+            },
             options: {
                 scales: {
                     y: {

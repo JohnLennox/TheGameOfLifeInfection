@@ -17,7 +17,7 @@ function setup() {
     
     board = new Board(gridLength);
     statEngine = new StatEngine(board);
-    graph = initGraph('aliveChart');
+    graph = initGraph('chart');
 }
 
 function draw() {
@@ -68,7 +68,7 @@ function initGraph(id){
     }
 
     let dead = {
-        label: "Deas",
+        label: "Dead",
         data: statEngine.getDeadSoFar(),
         colour: "rgb(200,0,0)"
     }
