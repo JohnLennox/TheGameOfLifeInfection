@@ -32,11 +32,8 @@ function draw() {
     }
     gameLogic();
     statProcessing();
-    displayData();
-    updateGraph(graph, statEngine.getPopulationSoFar());
-
+    updateGraph(graph);
     count ++;
-
 }
 
 function gameLogic() {
@@ -61,21 +58,62 @@ function gameLogic() {
     }
 }
 
-function displayData(){
-    document.getElementById('alive').innerText = "People alive: " + statEngine.getPopulation(count);
-    document.getElementById('infectedPop').innerText = "Population Infected: " + statEngine.getInfected(count);
-    document.getElementById('alive').innerText = "People alive: " + statEngine.getPopulation(count);
-    document.getElementById('alive').innerText = "People alive: " + statEngine.getPopulation(count);
-}
-
 function initGraph(id){
     let ctx = document.getElementById(id);
-    let chart =  graphEngine.drawChart(ctx,statEngine.getPopulationSoFar());
+    
+    let population = {
+        label: "Population",
+        data: statEngine.getPopulationSoFar(),
+        colour: "rgb(0,200,0)"
+    }
+
+    let dead = {
+        label: "Deas",
+        data: statEngine.getDeadSoFar(),
+        colour: "rgb(200,0,0)"
+    }
+    let infected = {
+        label: "Infected",
+        data: statEngine.getInfectedSoFar(),
+        colour: "rgb(0,0,200)"
+    }
+
+    let data = new Array();
+    data.push(population);
+    data.push(dead);
+    data.push(infected);
+    let chart =  graphEngine.drawChart(ctx,data);
     return chart;
 }
 
-function updateGraph(graphs, data){
-    graphEngine.updateGraph(graphs, data);
+function updateGraph(graphs){
+
+    let population = {
+        label: "Population",
+        data: statEngine.getPopulationSoFar(),
+        colour: "rgb(0,200,0)"
+    }
+
+    let dead = {
+        label: "Dead",
+        data: statEngine.getDeadSoFar(),
+        colour: "rgb(200,0,0)"
+    }
+
+    let infected = {
+        label: "Infected",
+        data: statEngine.getInfectedSoFar(),
+        colour: "rgb(0,0,200)"
+    }
+
+    let data = {
+        population: population,
+        dead: dead,
+        infected: infected
+
+    }
+
+    graphEngine.update(graphs, data);
 }
 
 function statProcessing() {
