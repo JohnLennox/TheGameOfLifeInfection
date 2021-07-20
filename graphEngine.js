@@ -4,19 +4,11 @@ class GraphEngine {
         this.numberedList = new Array();
     }
 
-    updateGraph(graph, dataList) {
-        
-        graph.data.datasets.forEach((dataset) => {
-            dataset.data = (dataList);
-        });
-        graph.update();
-    }
-
     update(graph, stats){
         let dataList = new Array();
-        dataList.push(this.makeDataSet(stats.population.label, stats.population.data, stats.population.colour));
-        dataList.push(this.makeDataSet(stats.dead.label, stats.dead.data, stats.dead.colour));
-        dataList.push(this.makeDataSet(stats.infected.label, stats.infected.data, stats.infected.colour));
+        dataList[0] = (this.makeDataSet(stats.population.label, stats.population.data, stats.population.colour));
+        dataList[1] = (this.makeDataSet(stats.dead.label, stats.dead.data, stats.dead.colour));
+        dataList[2] = (this.makeDataSet(stats.infected.label, stats.infected.data, stats.infected.colour));
 
         this.updateNumberedList();
         graph.data.labels = this.getNumberedList();

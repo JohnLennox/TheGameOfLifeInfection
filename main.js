@@ -31,8 +31,13 @@ function draw() {
         }
     }
     gameLogic();
-    statProcessing();
-    updateGraph(graph);
+
+    if(count%10 == 0){
+        statProcessing();
+        updateGraph(graph);
+    }
+    
+    board.newRound();
     count ++;
 }
 
@@ -110,7 +115,6 @@ function updateGraph(graphs){
         population: population,
         dead: dead,
         infected: infected
-
     }
 
     graphEngine.update(graphs, data);
