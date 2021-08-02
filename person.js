@@ -1,6 +1,6 @@
 class Person {
     constructor(x, y, res, board) {
-        this.infectionTime = 15;
+        this.infectionTime = 5;
         this.age = 0;
         this.infected = false;
         this.neighbours = 0;

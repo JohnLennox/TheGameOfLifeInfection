@@ -19,6 +19,10 @@ class Board {
         }
     }
 
+    newRound(){
+        this.resetStats();
+    }
+
     make2dArray(gridLength) {
         let twodArray = Array(gridLength);
         for (let i = 0; i < gridLength; i++) {

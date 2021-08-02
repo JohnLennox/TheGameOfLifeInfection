@@ -4,6 +4,8 @@ class StatEngine{
         this.populationSoFar = new Array();
         this.deadSoFar = new Array();
         this.infectedSoFar = new Array();
+        this.infectedDeathsSoFar = new Array();
+        this.unInfectedSoFar = new Array();
     }
 
     getInfected(generation){
@@ -30,6 +32,14 @@ class StatEngine{
         return this.infectedSoFar;
     }
 
+    getInfectedDeathsSoFar(){
+        return this.infectedDeathsSoFar;
+    }
+
+    getUnInfectedSoFar(){
+        return this.unInfectedSoFar;
+    }
+
     getDead(generation){
         return this.statistics.get(generation).totalDeaths;
     }
@@ -47,5 +57,7 @@ class StatEngine{
         this.deadSoFar.push(data.totalDeaths);
         this.populationSoFar.push(data.population);
         this.infectedSoFar.push(data.populationInfected);
+        this.infectedDeathsSoFar.push(data.infectedDeaths);
+        this.unInfectedSoFar.push(data.population - data.populationInfected)
     }
 }
