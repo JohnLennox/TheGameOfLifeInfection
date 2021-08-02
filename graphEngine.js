@@ -1,34 +1,41 @@
 class GraphEngine {
 
-    constructor(){
+    constructor() {
         this.numberedList = new Array();
     }
 
-    update(graph, stats){
+    processData(stats) {
         let dataList = new Array();
-        dataList[0] = (this.makeDataSet(stats.population.label, stats.population.data, stats.population.colour));
-        dataList[1] = (this.makeDataSet(stats.dead.label, stats.dead.data, stats.dead.colour));
-        dataList[2] = (this.makeDataSet(stats.infected.label, stats.infected.data, stats.infected.colour));
+        for (let i = 0; i < stats.length; i++) {
+            let label = stats[i].label;
+            let data = stats[i].data;
+            let colour = stats[i].colour;
+            dataList[i] = this.makeDataSet(label, data, colour);
+        }
+        return dataList;
+    }
 
+    update(graph, stats) {
+        let dataList = this.processData(stats);
         this.updateNumberedList();
         graph.data.labels = this.getNumberedList();
 
-        for(let i=0; i<graph.data.datasets.length; i++){
+        for (let i = 0; i < graph.data.datasets.length; i++) {
             graph.data.datasets[i] = dataList[i];
         }
-        
+
         graph.update();
     }
 
-    updateNumberedList(){
-        this.numberedList.push((this.numberedList.length+1));
+    updateNumberedList() {
+        this.numberedList.push((this.numberedList.length + 1));
     }
 
     getNumberedList() {
         return this.numberedList;
     }
 
-    makeDataSet(labelText, dataList, colour){
+    makeDataSet(labelText, dataList, colour) {
         return {
             label: labelText,
             data: dataList,
@@ -38,10 +45,9 @@ class GraphEngine {
         }
     }
 
-    makeDataSets(dataObjects){
+    makeDataSets(dataObjects) {
         let datasets = new Array();
-        for(let i =0; i<dataObjects.length; i++){
-            let dataObject = dataObjects[i];
+        for (let dataObject of dataObjects) {
             let data = this.makeDataSet(dataObject.label, dataObject.data, dataObject.colour);
             datasets.push(data);
         }

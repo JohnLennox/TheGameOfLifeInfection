@@ -32,7 +32,7 @@ function draw() {
     }
     gameLogic();
 
-    if(count%10 == 0){
+    if(count%2 == 0){
         statProcessing();
         updateGraph(graph);
     }
@@ -65,18 +65,23 @@ function gameLogic() {
 
 function initGraph(id){
     let ctx = document.getElementById(id);
-    
+    let chart =  graphEngine.drawChart(ctx,getGraphData());
+    return chart;
+}
+
+function getGraphData(){
     let population = {
         label: "Population",
         data: statEngine.getPopulationSoFar(),
         colour: "rgb(0,200,0)"
     }
 
-    let dead = {
-        label: "Dead",
-        data: statEngine.getDeadSoFar(),
+    let infectionDeaths = {
+        label: "Free",
+        data: statEngine.getUnInfectedSoFar(),
         colour: "rgb(200,0,0)"
     }
+
     let infected = {
         label: "Infected",
         data: statEngine.getInfectedSoFar(),
@@ -84,40 +89,12 @@ function initGraph(id){
     }
 
     let data = new Array();
-    data.push(population);
-    data.push(dead);
-    data.push(infected);
-    let chart =  graphEngine.drawChart(ctx,data);
-    return chart;
+    data.push(population , infectionDeaths, infected);
+    return data;
 }
 
-function updateGraph(graphs){
-
-    let population = {
-        label: "Population",
-        data: statEngine.getPopulationSoFar(),
-        colour: "rgb(0,200,0)"
-    }
-
-    let dead = {
-        label: "Dead",
-        data: statEngine.getDeadSoFar(),
-        colour: "rgb(200,0,0)"
-    }
-
-    let infected = {
-        label: "Infected",
-        data: statEngine.getInfectedSoFar(),
-        colour: "rgb(0,0,200)"
-    }
-
-    let data = {
-        population: population,
-        dead: dead,
-        infected: infected
-    }
-
-    graphEngine.update(graphs, data);
+function updateGraph(graphs){    
+    graphEngine.update(graphs, getGraphData());
 }
 
 function statProcessing() {
